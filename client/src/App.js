@@ -1,7 +1,7 @@
 function App() {
   return (
     <div>
-      <form>
+      <form action="post">
         <input type="file" />
       </form>
     </div>
