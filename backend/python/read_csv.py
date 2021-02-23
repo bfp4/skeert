@@ -73,4 +73,4 @@ def read_freq():
         writer.writerow(["time", "freq", "octave"])
         for stamp in updatedDict:
             writer.writerow([stamp, updatedDict[stamp]["note"], updatedDict[stamp]["octave"]])
-    print("Done reading.")
+    return updatedDict

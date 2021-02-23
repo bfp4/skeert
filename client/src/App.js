@@ -1,19 +1,33 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 function App() {
-  const [file, setFile] = useState("")
-
+  const [file, setFile] = useState(null);
   const fileInserted = (event) => setFile(event.target.value);
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-  }
-  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (file) {
+      const data = new FormData();
+      data.append("file", file);
+      await fetch("/run", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-type": "multipart/form-data"
+        }
+      }).then(res => res.json())
+      .then(data => console.log(data.file))
+      .catch(error => console.error(error))
+    }
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="file" value={file} onChange={fileInserted}/>
-        <button type="submit">Submit</button>
+        <input
+          type="file"
+          name="file"
+          onChange={fileInserted}
+        />
+        <button type="submit" disabled={!file}>Submit</button>
       </form>
     </div>
   );
